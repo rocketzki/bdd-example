@@ -1,10 +1,5 @@
 package com.rocketzki.bddexample;
 
-import lombok.extern.slf4j.Slf4j;
-
-import java.time.OffsetDateTime;
-
-@Slf4j
 public class UserAdminProcessor {
 
     private final InMemoryAppUserRepo repository;
@@ -27,19 +22,19 @@ public class UserAdminProcessor {
     private void modifyUser(AppUserChangeEvent event, AppUser user) {
         user.getAssignedApps().addAll(event.getAssignedApps());
         user.setName(event.getName());
-        user.setUserLocalUpdatedAt(OffsetDateTime.now());
+        user.setUserLocalUpdatedAt(event.getTimestamp());
 
         repository.save(user);
 
-        log.info("## User " + user.getId() + " has been modified.");
+        System.out.println("## User " + user.getId() + " has been modified.");
     }
 
     private void createUser(AppUserChangeEvent event) {
-        var user = new AppUser(event.getId(), event.getName(), event.getAssignedApps());
+        var user = new AppUser(event.getId(), event.getName(), event.getAssignedApps(), event.getTimestamp());
 
         repository.save(user);
 
-        log.info("## User " + user.getId() + " has been modified.");
+        System.out.println("## User " + user.getId() + " has been modified.");
 
     }
 

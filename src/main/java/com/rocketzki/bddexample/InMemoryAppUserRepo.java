@@ -1,19 +1,15 @@
 package com.rocketzki.bddexample;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.NonNull;
-
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 public class InMemoryAppUserRepo {
 
     private final Map<Long, AppUser> store = new HashMap<>();
 
-    public void save(@NonNull AppUser entity) {
+    public void save(AppUser entity) {
         putOrReplace(entity);
-        log.info("### Entity '" + entity + "' saved!");
+        System.out.println("### Entity '" + entity + "' saved!");
     }
 
     public AppUser findUser(Long id) {

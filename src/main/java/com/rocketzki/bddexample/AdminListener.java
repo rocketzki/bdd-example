@@ -1,29 +1,29 @@
 package com.rocketzki.bddexample;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 
-@Slf4j
 public class AdminListener {
 
     private final UserAdminProcessor userAdminProcessor;
+    private final ObjectMapper objectMapper;
 
-    public AdminListener(UserAdminProcessor processor) {
+    public AdminListener(UserAdminProcessor processor, ObjectMapper objectMapper) {
         this.userAdminProcessor = processor;
+        this.objectMapper = objectMapper;
     }
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-
+    @SneakyThrows
     public void receive(String message) {
         try {
             var appUser = objectMapper.readValue(message, AppUserChangeEvent.class);
             userAdminProcessor.process(appUser);
 
         } catch (IOException exc) {
-            log.error("Cannot read message", exc);
+            System.out.println("Cannot read message");
+            throw exc;
         }
     }
 }

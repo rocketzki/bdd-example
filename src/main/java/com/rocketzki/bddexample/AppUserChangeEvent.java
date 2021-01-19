@@ -1,16 +1,18 @@
 package com.rocketzki.bddexample;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Builder
 public class AppUserChangeEvent {
-    private final Long id;
-    private final String name;
-    private final List<String> assignedApps;
-    private final OffsetDateTime timestamp;
+    private Long id;
+    private String name;
+    private List<String> assignedApps;
+    private OffsetDateTime timestamp;
 }
